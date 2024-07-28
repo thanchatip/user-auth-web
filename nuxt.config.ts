@@ -1,5 +1,27 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { definePreset, palette } from "@primevue/themes";
+import Aura from "@primevue/themes/aura";
+
+const MyPreset = definePreset(Aura, {
+  semantic: {
+    primary: palette("{violet}"),
+  },
+});
+
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
-  devtools: { enabled: false }
-})
+  modules: ["@primevue/nuxt-module"],
+  primevue: {
+    usePrimeVue: true,
+    autoImport: true,
+    options: {
+      ripple: true,
+      theme: {
+        preset: MyPreset,
+        options: {
+          darkModeSelector: ".dark",
+          cssLayer: false,
+        },
+      },
+    },
+  },
+  css: ["primeicons/primeicons.css"],
+});
