@@ -7,7 +7,7 @@
           <InputGroupAddon>
             <i class="pi pi-envelope"></i>
           </InputGroupAddon>
-          <InputText placeholder="Email" />
+          <InputText v-model="email" placeholder="Email" />
         </InputGroup>
       </div>
       <div class="field">
@@ -16,7 +16,7 @@
             <i class="pi pi-lock"></i>
           </InputGroupAddon>
           <Password
-            v-model="value"
+            v-model="password"
             :feedback="false"
             toggleMask
             placeholder="Password"
@@ -30,7 +30,14 @@
       </span>
     </div>
     <div class="button-group">
-      <Button class="button" icon="pi pi-sign-in" label="Log-in" rounded />
+      <Button
+        class="button"
+        label="Log-in"
+        rounded
+        :loading="isLoading"
+        :disabled="isLoading"
+        @click="handleClickLogin"
+      />
     </div>
     <Divider align="center"> or </Divider>
     <div class="register-choice">
@@ -43,7 +50,22 @@
 </template>
 
 <script lang="ts" setup>
-const value = ref();
+import { login } from "../server/auth";
+
+const email = ref();
+const password = ref();
+const isLoading = ref(false);
+
+async function handleClickLogin() {
+  isLoading.value = true;
+
+  const loginResult = await login(email.value, password.value);
+  if (loginResult?.status == 201) {
+    navigateTo("/home");
+  }
+
+  isLoading.value = false;
+}
 
 function handleClickRegister() {
   navigateTo("/register");

@@ -38,12 +38,7 @@
       </div>
     </div>
     <div class="button-group">
-      <Button
-        class="button"
-        icon="pi pi-user-plus"
-        label="Register"
-        @click="handleClickRegister"
-      />
+      <Button class="button" label="Register" @click="handleClickRegister" />
     </div>
   </div>
 </template>

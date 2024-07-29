@@ -2,23 +2,32 @@
   <div class="content">
     <h1>Enter OTP</h1>
     <div class="form-content">
-      <InputOtp v-model="value" integerOnly :length="6" />
+      <InputOtp
+        v-model="otp"
+        integerOnly
+        :length="6"
+        @update:modelValue="handleInputOTP"
+      />
     </div>
     <div class="button-box">
-      <Button
-        class="button"
-        severity="secondary"
-        label="Resend Code"
-        @click="handleClickResendCode"
-      />
+      <Button class="button" severity="secondary" label="Resend Code" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const value = ref();
+import { verifyOTP } from "../server/auth";
+import { useUserStore } from "../stores/data/store";
 
-function handleClickRegister() {}
+const userStore = useUserStore();
+const otp = ref();
+
+async function handleInputOTP() {
+  if (otp.value.length === 6) {
+    console.log("otp", otp.value);
+    await verifyOTP(userStore.email, otp.value);
+  }
+}
 </script>
 
 <style lang="scss" setup>

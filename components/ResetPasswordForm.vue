@@ -1,17 +1,20 @@
 <template>
   <div class="content">
-    <h1>Forgot your password</h1>
-    <div class="instruction-text">
-      Enter your email address and we will send you an OTP to reset your
-      password.
-    </div>
+    <h1>Reset your password</h1>
     <div class="form-content">
       <div class="field">
         <InputGroup>
-          <InputGroupAddon>
-            <i class="pi pi-envelope"></i>
-          </InputGroupAddon>
-          <InputText v-model="email" placeholder="Email" />
+          <InputGroup>
+            <InputGroupAddon>
+              <i class="pi pi-lock"></i>
+            </InputGroupAddon>
+            <Password
+              v-model="password"
+              :feedback="false"
+              toggleMask
+              placeholder="Password"
+            />
+          </InputGroup>
         </InputGroup>
       </div>
     </div>
@@ -20,7 +23,7 @@
         class="button"
         label="Reset Password"
         :loading="isLoading"
-        :disabled="!email"
+        :disabled="!password"
         @click="handleResetPassword"
         rounded
       />
@@ -33,15 +36,10 @@ import { useUserStore } from "../stores/data/store";
 
 const userStore = useUserStore();
 
-const email = ref();
+const password = ref();
 const isLoading = ref(false);
 
-async function handleResetPassword() {
-  isLoading.value = true;
-  await userStore.getOTP(email.value);
-  navigateTo("/otp");
-  isLoading.value = false;
-}
+async function handleResetPassword() {}
 </script>
 
 <style lang="scss" setup>
