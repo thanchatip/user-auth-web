@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+# User Authentication Web
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+User Authentication Web using nuxt3
 
 ## Setup
 
@@ -19,24 +19,16 @@ pnpm install
 
 ## Development Server
 
-Start the development server on http://localhost:3000
+Start the development server on http://localhost:3001
 
 ```bash
 npm run dev
 ```
 
-## Production
 
-Build the application for production:
 
-```bash
-npm run build
-```
+# Screenshots
+![image](https://github.com/user-attachments/assets/52224b62-6a4c-4494-a674-5a53366c6ccd)
+![image](https://github.com/user-attachments/assets/bfa61e63-5d83-4fe8-a04b-5bb70605a621)
+![image](https://github.com/user-attachments/assets/cb6bea67-1146-40c6-bf9e-49b7b68d883b)
 
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
