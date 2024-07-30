@@ -1,25 +1,9 @@
 <template>
   <div class="content">
-    <h1>Welcome {{ userStore.email }} !</h1>
-    <div class="button-group">
-      <Button
-        class="button"
-        label="Change Password"
-        @click="handleChangePassword"
-        rounded
-      />
-    </div>
+    <i class="icon pi pi-check" />
+    <h1>Success</h1>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useUserStore } from "../stores/data";
-const userStore = useUserStore();
-
-function handleChangePassword() {
-  navigateTo("/change-password");
-}
-</script>
 
 <style lang="scss" setup>
 .content {
@@ -28,9 +12,8 @@ function handleChangePassword() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   height: 400px;
-  width: 450px;
+  width: 400px;
   background: #ffff;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,

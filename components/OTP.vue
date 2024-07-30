@@ -25,7 +25,10 @@ const otp = ref();
 async function handleInputOTP() {
   if (otp.value.length === 6) {
     console.log("otp", otp.value);
-    await verifyOTP(userStore.email, otp.value);
+    const response = await verifyOTP(userStore.email, otp.value);
+    if (response?.status === 201) {
+      navigateTo("/reset-password");
+    }
   }
 }
 </script>

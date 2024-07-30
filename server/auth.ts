@@ -56,4 +56,81 @@ async function verifyOTP(email: string, otp: string) {
   }
 }
 
-export { login, requestOTP, verifyOTP };
+async function register(name: string, email: string, password: string) {
+  const runtimeConfig = useRuntimeConfig();
+  const host = runtimeConfig.public.API_BASE_URL;
+
+  try {
+    const response: AxiosResponse = await axios(`${host}/auth/register`, {
+      method: "POST",
+      data: { name, email, password },
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+    });
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function changePassword(
+  email: string,
+  oldPassword: string,
+  newPassword: string
+) {
+  const runtimeConfig = useRuntimeConfig();
+  const host = runtimeConfig.public.API_BASE_URL;
+
+  try {
+    const response: AxiosResponse = await axios(
+      `${host}/auth/change-password`,
+      {
+        method: "POST",
+        data: { email, oldPassword, newPassword },
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function forgetPassword(email: string, newPassword: string) {
+  const runtimeConfig = useRuntimeConfig();
+  const host = runtimeConfig.public.API_BASE_URL;
+
+  try {
+    const response: AxiosResponse = await axios(
+      `${host}/auth/forget-password`,
+      {
+        method: "POST",
+        data: { email, newPassword },
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export {
+  login,
+  requestOTP,
+  verifyOTP,
+  register,
+  changePassword,
+  forgetPassword,
+};

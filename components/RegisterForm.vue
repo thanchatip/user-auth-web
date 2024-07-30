@@ -7,7 +7,7 @@
           <InputGroupAddon>
             <i class="pi pi-user"></i>
           </InputGroupAddon>
-          <InputText placeholder="Name" />
+          <InputText v-model="name" placeholder="Name" />
         </InputGroup>
       </div>
       <div class="field">
@@ -15,7 +15,7 @@
           <InputGroupAddon>
             <i class="pi pi-envelope"></i>
           </InputGroupAddon>
-          <InputText placeholder="Email" />
+          <InputText v-model="email" placeholder="Email" />
         </InputGroup>
       </div>
       <div class="field">
@@ -24,7 +24,7 @@
             <i class="pi pi-lock"></i>
           </InputGroupAddon>
           <Password
-            v-model="value"
+            v-model="password"
             :feedback="false"
             toggleMask
             placeholder="Password"
@@ -33,15 +33,46 @@
       </div>
     </div>
     <div class="button-box">
-      <Button class="button" label="Register" @click="handleClickRegister" />
+      <Button
+        class="button"
+        label="Register"
+        :disabled="isDisabled"
+        @click="handleClickRegister"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const value = ref();
+import { register } from "~/server/auth";
 
-function handleClickRegister() {}
+const name = ref("");
+const email = ref("");
+const password = ref("");
+const isLoading = ref(false);
+
+const isDisabled = computed(
+  () => !name.value || !email.value || !password.value
+);
+
+async function handleClickRegister() {
+  if (name.value && email.value && password.value) {
+    isLoading.value = true;
+
+    const response = await register(name.value, email.value, password.value);
+
+    isLoading.value = false;
+
+    if (response?.status === 201) {
+      console.log("Registration successful");
+      navigateTo("/success");
+    } else {
+      console.error("Registration failed:", response?.statusText);
+    }
+  } else {
+    console.error("Registration failed: Missing fields");
+  }
+}
 </script>
 
 <style lang="scss" setup>

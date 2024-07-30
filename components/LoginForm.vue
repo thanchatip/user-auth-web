@@ -50,7 +50,9 @@
 </template>
 
 <script lang="ts" setup>
-import { login } from "../server/auth";
+import { useUserStore } from "~/stores/data/store";
+
+const userStore = useUserStore();
 
 const email = ref();
 const password = ref();
@@ -59,12 +61,11 @@ const isLoading = ref(false);
 async function handleClickLogin() {
   isLoading.value = true;
 
-  const loginResult = await login(email.value, password.value);
-  if (loginResult?.status == 201) {
+  const response = await userStore.userLogin(email.value, password.value);
+  if (response?.status === 201) {
     navigateTo("/home");
+    isLoading.value = false;
   }
-
-  isLoading.value = false;
 }
 
 function handleClickRegister() {
@@ -83,7 +84,7 @@ function handleClickForgotPassword() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 450px;
   width: 450px;
   background: #ffff;
   border-radius: 12px;

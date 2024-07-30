@@ -1,5 +1,5 @@
 <template>
   <div>
-    <ForgotPasswordForm />
+    <ResetPasswordForm />
   </div>
 </template>

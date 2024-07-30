@@ -1,4 +1,4 @@
-import { requestOTP } from "~/server/auth";
+import { login, requestOTP } from "~/server/auth";
 import { useUserStore } from "./store";
 
 async function getOTP(email: string) {
@@ -14,4 +14,16 @@ async function getOTP(email: string) {
   }
 }
 
-export default { getOTP };
+async function userLogin(email: string, password: string) {
+  const userStore = useUserStore();
+  const response = await login(email, password);
+
+  if (response?.status === 201) {
+    userStore.email = email;
+    return response;
+  } else {
+    throw new Error("Failed to login");
+  }
+}
+
+export default { getOTP, userLogin };

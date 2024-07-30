@@ -1,7 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <ChangePasswordForm />
   </div>
 </template>
-
-<style lang="scss" setup></style>

@@ -7,7 +7,12 @@
           <InputGroupAddon>
             <i class="pi pi-lock"></i>
           </InputGroupAddon>
-          <InputText placeholder="Old Password" />
+          <Password
+            v-model="oldPassword"
+            :feedback="false"
+            toggleMask
+            placeholder="Old Password"
+          />
         </InputGroup>
       </div>
       <div class="field">
@@ -16,7 +21,7 @@
             <i class="pi pi-lock"></i>
           </InputGroupAddon>
           <Password
-            v-model="value"
+            v-model="newPassword"
             :feedback="false"
             toggleMask
             placeholder="New Password"
@@ -29,7 +34,7 @@
             <i class="pi pi-lock"></i>
           </InputGroupAddon>
           <Password
-            v-model="value"
+            v-model="confirmPassword"
             :feedback="false"
             toggleMask
             placeholder="Confirm New Password"
@@ -38,15 +43,43 @@
       </div>
     </div>
     <div class="button-group">
-      <Button class="button" label="Register" @click="handleClickRegister" />
+      <Button
+        class="button"
+        label="Change Password"
+        :disabled="isDisabled"
+        @click="handleClickChangePassword"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-const value = ref();
+import { changePassword } from "~/server/auth";
+import { useUserStore } from "../stores/data";
+const userStore = useUserStore();
 
-function handleClickRegister() {}
+const oldPassword = ref("");
+const newPassword = ref("");
+const confirmPassword = ref("");
+
+const isDisabled = computed(
+  () =>
+    oldPassword.value === "" ||
+    newPassword.value === "" ||
+    confirmPassword.value === "" ||
+    newPassword.value !== confirmPassword.value
+);
+
+async function handleClickChangePassword() {
+  const response = await changePassword(
+    userStore.email,
+    oldPassword.value,
+    newPassword.value
+  );
+  if (response?.status === 201) {
+    navigateTo("/success");
+  }
+}
 </script>
 
 <style lang="scss" setup>

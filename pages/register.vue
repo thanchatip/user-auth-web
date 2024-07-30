@@ -1,7 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <RegisterForm />
   </div>
 </template>
-
-<style lang="scss" setup></style>

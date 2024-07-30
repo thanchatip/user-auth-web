@@ -32,14 +32,29 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from "../stores/data/store";
+import { forgetPassword } from "~/server/auth";
+import { useUserStore } from "../stores/data";
 
 const userStore = useUserStore();
 
 const password = ref();
 const isLoading = ref(false);
 
-async function handleResetPassword() {}
+async function handleResetPassword() {
+  isLoading.value = true;
+  try {
+    // Simulate password reset
+    await forgetPassword(userStore.email, password.value);
+    console.log("Password reset successful");
+    // Reset form and loading state
+    password.value = "";
+    isLoading.value = false;
+    navigateTo("/success");
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    isLoading.value = false;
+  }
+}
 </script>
 
 <style lang="scss" setup>
